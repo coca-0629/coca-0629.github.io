@@ -1,25 +1,260 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나의 첫 웹사이트</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f2f5;
-        }
-        h1 {
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>고가현 | 입사용 포트폴리오</title>
+  
+  <!-- Tailwind CSS 로드 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React 및 ReactDOM 라이브러리 로드 -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  
+  <!-- Babel(JSX 변환기) 로드 -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* 스크롤바를 위한 부드러운 스크롤 동작 추가 */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
-<body>
-    <h1>안녕하세요, 제 GitHub Pages에 오신 것을 환영합니다!</h1>
+<body class="bg-slate-50">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // lucide-react 아이콘을 인라인 SVG 컴포넌트로 대체합니다.
+    const Icon = ({ children, size = 24, className = "" }) => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+      >
+        {children}
+      </svg>
+    );
+
+    const Github = ({ size, className }) => ( <Icon size={size} className={className}><path d="M9 19c-4.3 1.4 -4.3-2.5 -6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6.1 0-1.3-.5-2.4-1.2-3.2.1-.3.5-1.5-.1-3.2 0 0-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1c-.6 1.7-.2 2.9-.1 3.2-.7.8-1.2 1.9-1.2 3.2 0 4.6 2.7 5.7 5.5 6.1-.6.5-.9 1.4-.9 2.8v3.5"></path></Icon> );
+    const Mail = ({ size, className }) => ( <Icon size={size} className={className}><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></Icon> );
+    const Phone = ({ size, className }) => ( <Icon size={size} className={className}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></Icon> );
+    const GraduationCap = ({ size, className }) => ( <Icon size={size} className={className}><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.084a1 1 0 0 0 0 1.838l8.57 3.908a2 2 0 0 0 1.66 0l8.59-3.908z"></path><path d="M6 12v4c0 4.5 3 5 6 5s6-.5 6-5v-4"></path><path d="M12 22v-3"></path></Icon> );
+
+    // 데이터: 이 부분을 자신의 정보로 수정하세요.
+    const portfolioData = {
+      name: "고가현",
+      title: "물리·광과학과 석사과정생",
+      socials: {
+        github: "https://github.com/coca-0629",
+      },
+      avatar: "images/profile.jpg",
+      contact: {
+        phone: "010-2180-2775",
+        email: "kohkahyeon@gmail.com",
+      },
+      education: [
+        {
+          degree: "물리·광과학과 석사",
+          school: "광주과학기술원",
+          period: "2023.02 - 2025.08",
+        },
+        {
+          degree: "물리학과 이학사\n컴퓨터공학전공 공학사\n(복수전공)",
+          school: "제주대학교",
+          period: "2019.02 - 2023.02",
+        },
+      ],
+      skills: [
+        "AI/ML", "DFT", "MD", "Python"
+      ],
+      projects: [
+        {
+          title: "응집물질물리 이론 연구실",
+          period: "2023.02 - 2025.08",
+          description: "강상관계 물질을 머신러닝 퍼텐셜을 이용하여 분자동역학 시뮬레이션 및 분석",
+          tech: ["AI/ML", "DFT", "MD", "Python"],
+          link: "index.html" // 이 프로젝트를 클릭 시 이동할 내부 경로
+        },
+        {
+          title: "한국전자통신연구원(ETRI) 양자통신연구실 연구연수생",
+          period: "2023.01 - 2023.02",
+          description: "양자암호통신을 위한 기술 개발 참여",
+          tech: ["SPS", "ODMR"],
+        },
+        {
+          title: "한국과학기술원(KAIST) 원자력 및 양자공학과 의료영상 및 의학물리 연구실",
+          period: "2022.07 - 2022.08",
+          description: "발전된 잡음 제거 알고리즘을 이용하여 CT 이미지 잡음 최소화",
+          tech: ["Pytorch"],
+        },
+        {
+          title: "제주대학교 물리학과 나노반도체실험실 학부연구생생",
+          period: "2021.08 - 2022.06",
+          description: "Perovskite-Quantum-Dots/Graphene을 이용한 광검출 소자 개발 (https://doi.org/10.3938/NPSM.72.883)",
+          tech: ["나노소자"],
+        }
+      ],
+      // 꼬리말 텍스트: 이 값을 비워두면 기본 저작권 문구가 표시됩니다.
+      footerText: "", 
+    };
+
+    // 왼쪽 프로필/네비게이션 컴포넌트
+    const ProfileSidebar = ({ data }) => {
+      return (
+        <div className="w-full md:w-1/3 lg:w-2/5 md:sticky md:top-0 md:h-screen p-8 lg:p-16 flex flex-col justify-between">
+          <div>
+            <div className="text-center md:text-left">
+              <img 
+                src={data.avatar} 
+                alt="프로필 사진" 
+                className="w-32 h-32 rounded-full mx-auto md:mx-0 mb-6 border-4 border-slate-200 shadow-md object-cover"
+              />
+              <h1 className="text-4xl lg:text-5xl font-bold text-slate-800">{data.name}</h1>
+              <h2 className="text-xl lg:text-2xl font-semibold text-slate-600 mt-2">{data.title}</h2>
+              
+              <div className="mt-8 text-left space-y-5 text-slate-600">
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Contact</h3>
+                  <div className="flex items-center mb-2">
+                    <Phone size={16} className="mr-3 text-slate-400 flex-shrink-0" />
+                    <span>{data.contact.phone}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Mail size={16} className="mr-3 text-slate-400 flex-shrink-0" />
+                    <span>{data.contact.email}</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Education</h3>
+                  {data.education.map((edu, index) => (
+                    <div key={index} className="flex items-start">
+                         <GraduationCap size={18} className="mr-3 mt-1 text-slate-400 flex-shrink-0" />
+                        <div>
+                            <p className="font-semibold text-slate-700">{edu.degree}</p>
+                            <p className="text-sm">{edu.school}</p>
+                            <p className="text-sm text-slate-500">{edu.period}</p>
+                        </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <nav className="hidden md:block mt-12">
+              <ul className="space-y-4">
+                <li><a href="#skills" className="group flex items-center py-2">
+                  <span className="mr-4 h-px w-8 bg-slate-400 group-hover:w-16 group-hover:bg-slate-800 transition-all duration-300"></span>
+                  <span className="font-bold tracking-widest text-sm text-slate-600 group-hover:text-slate-800 uppercase">Skills</span>
+                </a></li>
+                <li><a href="#projects" className="group flex items-center py-2">
+                  <span className="mr-4 h-px w-8 bg-slate-400 group-hover:w-16 group-hover:bg-slate-800 transition-all duration-300"></span>
+                  <span className="font-bold tracking-widest text-sm text-slate-600 group-hover:text-slate-800 uppercase">Projects</span>
+                </a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div className="flex items-center justify-center md:justify-start space-x-5 mt-8 md:mt-0">
+            <a href={data.socials.github} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-800 transition-colors">
+              <Github size={28} />
+            </a>
+            <a href={`mailto:${data.contact.email}`} className="text-slate-500 hover:text-slate-800 transition-colors">
+              <Mail size={28} />
+            </a>
+          </div>
+        </div>
+      );
+    };
+
+    // 오른쪽 컨텐츠 컴포넌트
+    const MainContent = ({ data }) => {
+      return (
+        <main className="w-full md:w-2/3 lg:w-3/5 p-8 lg:py-16 lg:px-12">
+          {/* 기술 스택 섹션 */}
+          <section id="skills" className="mb-16 scroll-mt-24">
+            <h3 className="text-2xl font-bold text-slate-800 mb-6 uppercase tracking-wider md:hidden">Skills</h3>
+            <div className="flex flex-wrap gap-3">
+              {data.skills.map(skill => (
+                <span key={skill} className="bg-slate-200 text-slate-700 font-medium px-4 py-2 rounded-full text-sm">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          {/* 프로젝트 섹션 */}
+          <section id="projects" className="scroll-mt-24">
+            <h3 className="text-2xl font-bold text-slate-800 mb-8 uppercase tracking-wider md:hidden">Projects</h3>
+            <div className="space-y-12">
+              {data.projects.map((project, index) => (
+                 // 프로젝트 카드 전체를 a 태그로 감싸고, href에 project.link를 연결합니다.
+                 <a 
+                    key={index} 
+                    href={project.link} 
+                    className="block group p-6 rounded-lg bg-white hover:bg-slate-100/70 shadow-sm hover:shadow-lg transition-all duration-300 ease-out transform hover:-translate-y-1 cursor-pointer"
+                 >
+                    <h4 className="text-xl font-bold text-slate-800 group-hover:text-emerald-600 transition-colors">{project.title}</h4>
+                    <p className="text-sm text-slate-500 mt-2">{project.period}</p>
+                    <p className="text-slate-600 mt-2 text-base leading-relaxed">{project.description}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tech.map(t => (
+                        <span key={t} className="bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                 </a>
+              ))}
+            </div>
+          </section>
+        </main>
+      );
+    };
+
+    // 꼬리말 컴포넌트
+    const Footer = ({ name, text }) => {
+      // 사용자 정의 텍스트가 없으면 기본 저작권 문구를 생성합니다.
+      const content = text || `© ${new Date().getFullYear()} ${name}. All Rights Reserved.`;
+      return (
+        <footer className="w-full text-center p-6 text-sm text-slate-500">
+          <p>
+            {content}
+          </p>
+        </footer>
+      );
+    };
+
+    // App 컴포넌트: 전체 레이아웃을 담당
+    function App() {
+      return (
+        // flex-col과 min-h-screen을 사용하여 푸터가 항상 하단에 위치하도록 함
+        <div className="flex flex-col min-h-screen bg-slate-50">
+          {/* flex-grow를 사용하여 메인 컨텐츠가 남은 공간을 모두 차지하도록 함 */}
+          <main className="flex-grow">
+            <div className="max-w-screen-xl mx-auto md:flex">
+              <ProfileSidebar data={portfolioData} />
+              <MainContent data={portfolioData} />
+            </div>
+          </main>
+          <Footer name={portfolioData.name} text={portfolioData.footerText} />
+        </div>
+      );
+    }
+
+    // React 앱을 root div에 렌더링
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+
+  </script>
 </body>
 </html>
