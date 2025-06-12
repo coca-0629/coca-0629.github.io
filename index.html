@@ -136,11 +136,18 @@
                 <div>
                   <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Education</h3>
                   {data.education.map((edu, index) => (
-                    <div key={index} className="flex items-start">
+                    <div key={index} className="flex items-start mb-4">
                          <GraduationCap size={18} className="mr-3 mt-1 text-slate-400 flex-shrink-0" />
                         <div>
-                            <p className="font-semibold text-slate-700">{edu.degree}</p>
-                            <p className="text-sm">{edu.school}</p>
+                            {/* degree가 배열인지 확인하고, 맞다면 각 항목을 p태그로 렌더링합니다. */}
+                            {Array.isArray(edu.degree) ? (
+                              edu.degree.map((d, i) => (
+                                <p key={i} className="font-semibold text-slate-700">{d}</p>
+                              ))
+                            ) : (
+                              <p className="font-semibold text-slate-700">{edu.degree}</p>
+                            )}
+                           <p className="text-sm">{edu.school}</p>
                             <p className="text-sm text-slate-500">{edu.period}</p>
                         </div>
                     </div>
